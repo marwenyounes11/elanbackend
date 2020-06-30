@@ -50,7 +50,7 @@ public class ArticleController {
 		public ResponseEntity<Article> getArticleById(@PathVariable(value = "id") Long Id)
 				throws ResourceNotFoundException {
 			Article Article = repository.findById(Id)
-					.orElseThrow(() -> new ResourceNotFoundException("Categorie not found for this id :: " + Id));
+					.orElseThrow(() -> new ResourceNotFoundException("Article not found for this id :: " + Id));
 			return ResponseEntity.ok().body(Article);
 		}
 	 
@@ -167,7 +167,7 @@ public class ArticleController {
 		           article.setImage(Article.getImage());
 		           article.setTitre(Article.getTitre());
 		           
-		      return new ResponseEntity<>(repository.save(Article), HttpStatus.OK);
+		      return new ResponseEntity<>(repository.save(article), HttpStatus.OK);
 		    } else {
 		      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		    }
