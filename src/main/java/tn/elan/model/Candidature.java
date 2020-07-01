@@ -26,6 +26,7 @@ public class Candidature {
 	private String diplome;
 	private String type;
 	private String candidats;
+	
 	@OneToMany(mappedBy = "candidature",cascade = CascadeType.REMOVE,orphanRemoval = true,fetch=FetchType.EAGER)
 	 @JsonBackReference
   Set<Candidat> candidat;
