@@ -25,7 +25,7 @@ public class Candidature {
 	private String cv;
 	private String diplome;
 	private String type;
-	private String candidats;
+
 	
 	@OneToMany(mappedBy = "candidature",cascade = CascadeType.REMOVE,orphanRemoval = true,fetch=FetchType.EAGER)
 	 @JsonBackReference
@@ -61,12 +61,7 @@ public class Candidature {
 		this.type = type;
 	}
 	
-	public String getCandidats() {
-		return candidats;
-	}
-	public void setCandidats(String candidats) {
-		this.candidats = candidats;
-	}
+	
 	public Set<Candidat> getCandidat() {
 		return candidat;
 	}
@@ -82,14 +77,13 @@ public class Candidature {
 	}
 	
 	
-	public Candidature(long id, String cv, String diplome, String type, String candidats, Set<Candidat> candidat,
-			Offre offre) {
+	
+	public Candidature(long id, String cv, String diplome, String type, Set<Candidat> candidat, Offre offre) {
 		super();
 		this.id = id;
 		this.cv = cv;
 		this.diplome = diplome;
 		this.type = type;
-		this.candidats = candidats;
 		this.candidat = candidat;
 		this.offre = offre;
 	}

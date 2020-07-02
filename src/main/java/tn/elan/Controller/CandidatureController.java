@@ -184,7 +184,7 @@ public class CandidatureController {
 	         cand.setDiplome(candidature.getDiplome());
 	         cand.setType(candidature.getType());
 	         cand.setCv(candidature.getCv());
-	         cand.setCandidats(candidature.getCandidat().toString());
+	         //cand.setCandidats(candidature.getCandidat().toString());
 	         cand.setOffre(candidature.getOffre());
 	    return new ResponseEntity<>(repository.save(cand), HttpStatus.OK);
 	  } else {
