@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "contact")
@@ -24,7 +25,7 @@ public class Contact {
 	private String candidats;
 	
 	@OneToMany(mappedBy = "contact",cascade = CascadeType.REMOVE,orphanRemoval = true,fetch=FetchType.EAGER)
-	 @JsonBackReference
+	 @JsonManagedReference 
    Set<Candidat> candidat;	
 	public long getId() {
 		return id;

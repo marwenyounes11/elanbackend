@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -22,11 +23,11 @@ public class Candidat {
 	private String email;
 	@ManyToOne
 	@JoinColumn(name = "contact_id")
-	@JsonManagedReference
+	@JsonBackReference
 	private Contact contact;
 	@ManyToOne
 	@JoinColumn(name = "candidature_id")
-	@JsonManagedReference
+	@JsonBackReference(value="candidat-candidature")
 	private Candidature candidature;
 	
 	public long getId() {

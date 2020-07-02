@@ -26,14 +26,13 @@ public class Candidature {
 	private String diplome;
 	private String type;
 
-	
 	@OneToMany(mappedBy = "candidature",cascade = CascadeType.REMOVE,orphanRemoval = true,fetch=FetchType.EAGER)
-	 @JsonBackReference
+	@JsonManagedReference(value="candidat-candidature")
   Set<Candidat> candidat;
 	
 	@ManyToOne
 	@JoinColumn(name = "offre_id")
-	@JsonManagedReference
+	@JsonBackReference
 	private Offre offre;
 	
 	public long getId() {

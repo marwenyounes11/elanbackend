@@ -77,8 +77,9 @@ public class CandidatureController {
         boolean isExit = new File(context.getRealPath("/Images/")).exists();
         if (!isExit)
         {
+        	
         	new File (context.getRealPath("/Images/")).mkdir();
-        	System.out.println("mk dir.............");
+        	System.out.println("mk dir............."+context.getRealPath("/Images/"));
         }
         String filename1 = file1.getOriginalFilename();
         String filename2 = file2.getOriginalFilename();
