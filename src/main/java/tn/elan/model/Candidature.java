@@ -22,6 +22,10 @@ public class Candidature {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+	private String nom;
+	private String prenom;
+	private String telephone;
+	private String email;
 	private String cv;
 	private String diplome;
 	private String type;
@@ -40,6 +44,31 @@ public class Candidature {
 	}
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+	public String getNom() {
+		return nom;
+	}
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+	public String getPrenom() {
+		return prenom;
+	}
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
+	public String getTelephone() {
+		return telephone;
+	}
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getCv() {
 		return cv;
@@ -77,9 +106,14 @@ public class Candidature {
 	
 	
 	
-	public Candidature(long id, String cv, String diplome, String type, Set<Candidat> candidat, Offre offre) {
+	public Candidature(long id, String nom, String prenom, String telephone, String email, String cv, String diplome,
+			String type, Set<Candidat> candidat, Offre offre) {
 		super();
 		this.id = id;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.telephone = telephone;
+		this.email = email;
 		this.cv = cv;
 		this.diplome = diplome;
 		this.type = type;

@@ -20,8 +20,12 @@ public class Contact {
 	 @Id
 	 @GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+	 private String nom;
+	 private String prenom;
+	 private String email;
 	private String sujet;
 	private String message;
+	
 	private String candidats;
 	
 	@OneToMany(mappedBy = "contact",cascade = CascadeType.REMOVE,orphanRemoval = true,fetch=FetchType.EAGER)
@@ -32,6 +36,25 @@ public class Contact {
 	}
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+	public String getNom() {
+		return nom;
+	}
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+	public String getPrenom() {
+		return prenom;
+	}
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getSujet() {
 		return sujet;
@@ -60,9 +83,13 @@ public class Contact {
 	}
 	
 	
-	public Contact(long id, String sujet, String message, String candidats, Set<Candidat> candidat) {
+	public Contact(long id, String nom, String prenom, String email, String sujet, String message, String candidats,
+			Set<Candidat> candidat) {
 		super();
 		this.id = id;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
 		this.sujet = sujet;
 		this.message = message;
 		this.candidats = candidats;

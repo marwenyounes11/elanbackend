@@ -50,12 +50,12 @@ public class ContactController {
 	 
 	    return contacts;
 	  }
-
+	Contact cont ;
 	@PostMapping("/contacts")
 	public ResponseEntity<Response> createContact( @RequestBody Contact contact){
-		Contact cont =new Contact();
-		 cont.setCandidats(contact.getCandidat().toString());
-	Contact con = repository.save(cont);
+		 
+		// cont.setCandidats(contact.getCandidat().toString());
+	Contact con = repository.save(contact);
 
 	if (con != null)
 	{

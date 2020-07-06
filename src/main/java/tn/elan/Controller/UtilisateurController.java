@@ -50,7 +50,7 @@ public class UtilisateurController {
 	}
 
 	 
-	 @GetMapping("/users/5/{login}")
+	 @GetMapping("/users/l/{login}")
 	  public   ResponseEntity<Utilisateur> getUtilisateurByLogin(@PathVariable String login) 
 		  throws ResourceNotFoundException {
 		  Utilisateur Utilisateur = repository.findByLogin(login)

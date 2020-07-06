@@ -97,10 +97,14 @@ public class CandidatureController {
         	e.printStackTrace();
         }
 
-        
+        candidatur.setNom(cand.getNom());
+        candidatur.setPrenom(cand.getPrenom());
+        candidatur.setTelephone(cand.getTelephone());
+        candidatur.setEmail(cand.getEmail());
+        candidatur.setType(cand.getType());
         candidatur.setCv(newFileName1);
         candidatur.setDiplome(newFileName2);
-       // candidatur.setCandidats(cand.getCandidat().toString());
+       
         Candidature cnd = repository.save(candidatur);
         if (cnd != null)
         {
