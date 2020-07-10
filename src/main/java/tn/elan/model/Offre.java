@@ -1,6 +1,6 @@
 package tn.elan.model;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -24,7 +24,7 @@ public class Offre {
 	 private String reference;
 	 private String nomPoste;
 	 private String descriptionPoste;
-	 private Date dateEcheance;
+	 private LocalDateTime dateEcheance;
 	 private String candidatures;
 	 
 	 @OneToMany(mappedBy = "offre",cascade = CascadeType.REMOVE,orphanRemoval = true,fetch=FetchType.EAGER)
@@ -55,10 +55,10 @@ public class Offre {
 	public void setDescriptionPoste(String descriptionPoste) {
 		this.descriptionPoste = descriptionPoste;
 	}
-	public Date getDateEcheance() {
+	public LocalDateTime getDateEcheance() {
 		return dateEcheance;
 	}
-	public void setDateEcheance(Date dateEcheance) {
+	public void setDateEcheance(LocalDateTime dateEcheance) {
 		this.dateEcheance = dateEcheance;
 	}
 	
@@ -76,7 +76,7 @@ public class Offre {
 	}
 	
 	
-	public Offre(long id, String reference, String nomPoste, String descriptionPoste, Date dateEcheance,
+	public Offre(long id, String reference, String nomPoste, String descriptionPoste, LocalDateTime dateEcheance,
 			String candidatures, Set<Candidature> candidature) {
 		super();
 		this.id = id;

@@ -52,9 +52,9 @@ public ResponseEntity<Offre> getOffreById(@PathVariable(value = "id") Long Id)
 
 @PostMapping("/offres")
 public ResponseEntity<Response> createOffre(@RequestBody Offre offre) {
-	 Offre offr = new Offre();
-offr.setCandidatures(offre.getCandidature().toString());	
-Offre off = repository.save(offr);
+	
+
+Offre off = repository.save(offre);
 
 if (off != null)
 {
