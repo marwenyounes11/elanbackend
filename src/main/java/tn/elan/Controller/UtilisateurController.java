@@ -50,11 +50,11 @@ public class UtilisateurController {
 	}
 
 	 
-	 @GetMapping("/users/l/{login}")
+	 @GetMapping("/users/5/{login}")
 	  public   ResponseEntity<Utilisateur> getUtilisateurByLogin(@PathVariable String login) 
 		  throws ResourceNotFoundException {
 		  Utilisateur Utilisateur = repository.findByLogin(login)
-				  .orElseThrow(() -> new ResourceNotFoundException("Usernot found for this id : "));
+				  .orElseThrow(() -> new ResourceNotFoundException("Usernot found for this login : "));
 		   return ResponseEntity.ok().body(Utilisateur);
 	  } 
 	
