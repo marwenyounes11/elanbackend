@@ -11,10 +11,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import javax.servlet.ServletContext;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,55 +36,46 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import tn.elan.domaine.Response;
 import tn.elan.exception.ResourceNotFoundException;
-import tn.elan.model.Article;
-import tn.elan.repository.ArticleRepository;
+import tn.elan.model.Medias;
+import tn.elan.repository.MediasRepository;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/api")
-public class ArticleController {
-	
+public class MediasController {
 	@Autowired  ServletContext context;
-	@Autowired 	ArticleRepository  repository;
+	@Autowired 	MediasRepository  repository;
 	
-	 @GetMapping("/articles/{id}")
-		public ResponseEntity<Article> getArticleById(@PathVariable(value = "id") Long Id)
+	 @GetMapping("/medias/{id}")
+		public ResponseEntity<Medias> getMediasById(@PathVariable(value = "id") Long Id)
 				throws ResourceNotFoundException {
-			Article Article = repository.findById(Id)
-					.orElseThrow(() -> new ResourceNotFoundException("Article not found for this id :: " + Id));
-			return ResponseEntity.ok().body(Article);
+			Medias medias = repository.findById(Id)
+					.orElseThrow(() -> new ResourceNotFoundException("Medias not found for this id :: " + Id));
+			return ResponseEntity.ok().body(medias);
 		}
 	 
-	 @GetMapping(path="/Imgarticles/{id}")
+	 @GetMapping(path="/Imgmedias/{id}")
 	 public byte[] getPhoto(@PathVariable("id") Long id) throws Exception{
-		 Article Article   = repository.findById(id).get();
-		 return Files.readAllBytes(Paths.get(context.getRealPath("/Images/")+Article.getImage()));
+		 Medias medias   = repository.findById(id).get();
+		 return Files.readAllBytes(Paths.get(context.getRealPath("/Images/")+medias.getImage()));
 	 }
 	
-	@GetMapping("/articles")
-	  public List<Article> getAllarticles() {
-	     System.out.println("Get all articles...");
+	@GetMapping("/medias")
+	  public List<Medias> getAllMedias() {
+	     System.out.println("Get all Medias...");
 	 
-	    List<Article> articles = new ArrayList<>();
-	    repository.findAll().forEach(articles::add);
+	    List<Medias> medias = new ArrayList<>();
+	    repository.findAll().forEach(medias::add);
 	 
-	    return articles;
+	    return medias;
 	  }
 	
-	@GetMapping("/larticles")
-	  public List<Article> getLastAllarticles() {
-	     System.out.println("Get last articles...");
-	 
-	    List<Article> articles = new ArrayList<>();
-	    repository.listArticle().forEach(articles::add);
-	 
-	    return articles;
-	  }
+	
 	 
 	 @GetMapping ("/getAll")
 	 public ResponseEntity<List<String>> getAll()
 	 {
-		 List<String> listArt = new ArrayList<String>();
+		 List<String> listMed = new ArrayList<String>();
 		 String filesPath = context.getRealPath("/Images");
 		 File filefolder = new File(filesPath);
 		 if (filefolder != null)
@@ -100,7 +91,7 @@ public class ArticleController {
 				      byte[] bytes = new byte[(int)file.length()];
 				      fileInputStream.read(bytes);
 				      encodeBase64 = Base64.getEncoder().encodeToString(bytes);
-				      listArt.add("data:image/"+extension+";base64,"+encodeBase64);
+				      listMed.add("data:image/"+extension+";base64,"+encodeBase64);
 				      fileInputStream.close();
 				      
 				      
@@ -110,14 +101,14 @@ public class ArticleController {
 				}
 			}
 		 }
-		 return new ResponseEntity<List<String>>(listArt,HttpStatus.OK);
+		 return new ResponseEntity<List<String>>(listMed,HttpStatus.OK);
 	 }
-	 @PostMapping("/articles")
-	 public ResponseEntity<Response> createArticle (@RequestParam("file") MultipartFile file,
-			 @RequestParam("article") String article) throws JsonParseException , JsonMappingException , Exception
+	 @PostMapping("/medias")
+	 public ResponseEntity<Response> createMedias (@RequestParam("file") MultipartFile file,
+			 @RequestParam("medias") String medias) throws JsonParseException , JsonMappingException , Exception
 	 {
 		 System.out.println("Ok .............");
-        Article arti = new ObjectMapper().readValue(article, Article.class);
+        Medias arti = new ObjectMapper().readValue(medias, Medias.class);
         boolean isExit = new File(context.getRealPath("/Images/")).exists();
         if (!isExit)
         {
@@ -138,49 +129,46 @@ public class ArticleController {
 
        
         arti.setImage(newFileName);
-        Article art = repository.save(arti);
+        Medias art = repository.save(arti);
         if (art != null)
         {
         	return new ResponseEntity<Response>(new Response (""),HttpStatus.OK);
         }
         else
         {
-        	return new ResponseEntity<Response>(new Response ("Article not saved"),HttpStatus.BAD_REQUEST);	
+        	return new ResponseEntity<Response>(new Response ("Medias not saved"),HttpStatus.BAD_REQUEST);	
         }
 	 }
-	 @DeleteMapping("/articles/{id}")
-		public Map<String, Boolean> deleteArticle(@PathVariable(value = "id") Long ArticleId)
+	 @DeleteMapping("/medias/{id}")
+		public Map<String, Boolean> deleteMedias(@PathVariable(value = "id") Long mediasId)
 				throws ResourceNotFoundException {
-			Article Article = repository.findById(ArticleId)
-					.orElseThrow(() -> new ResourceNotFoundException("Article not found  id :: " + ArticleId));
-			repository.delete(Article);
+			Medias medias = repository.findById(mediasId)
+					.orElseThrow(() -> new ResourceNotFoundException("Medias not found  id :: " + mediasId));
+			repository.delete(medias);
 			Map<String, Boolean> response = new HashMap<>();
 			response.put("deleted", Boolean.TRUE);
 			return response;
 		}
 		  	 
-		@DeleteMapping("/articles/delete")
-		  public ResponseEntity<String> deleteAllarticles() {
-		    System.out.println("Delete All articles...");
+		@DeleteMapping("/medias/delete")
+		  public ResponseEntity<String> deleteAllmedias() {
+		    System.out.println("Delete All Medias...");
 		    repository.deleteAll();
-		    return new ResponseEntity<>("All articles have been deleted!", HttpStatus.OK);
+		    return new ResponseEntity<>("All Medias have been deleted!", HttpStatus.OK);
 		}
 		
-		 @PutMapping("/articles/{id}")
-		  public ResponseEntity<Article> updateArticle(@PathVariable("id") long id, @RequestBody Article Article) {
-		    System.out.println("Update Article with ID = " + id + "...");
-		    Optional<Article> ArticleInfo = repository.findById(id);
-		    if (ArticleInfo.isPresent()) {
-		    	Article article = ArticleInfo.get();
-		           article.setAuteur(Article.getAuteur());
-		           article.setCorps(Article.getCorps());
-		           article.setDate(Article.getDate());
-		           article.setImage(Article.getImage());
-		           article.setTitre(Article.getTitre());
-		           
-		      return new ResponseEntity<>(repository.save(article), HttpStatus.OK);
+		 @PutMapping("/medias/{id}")
+		  public ResponseEntity<Medias> updateMedias(@PathVariable("id") long id, @RequestBody Medias Medias) {
+		    System.out.println("Update Medias with ID = " + id + "...");
+		    Optional<Medias> mediasInfo = repository.findById(id);
+		    if (mediasInfo.isPresent()) {
+		    	Medias medias = mediasInfo.get();
+		           medias.setImage(Medias.getImage());
+		          
+		      return new ResponseEntity<>(repository.save(medias), HttpStatus.OK);
 		    } else {
 		      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		    }
 		  }
+
 }
