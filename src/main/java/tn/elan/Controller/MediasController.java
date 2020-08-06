@@ -70,9 +70,59 @@ public class MediasController {
 	    return medias;
 	  }
 	
+	@GetMapping("/mediascoach")
+	  public List<Medias> getMediasCoach() {
+	     System.out.println("Get all Medias coach...");
+	 
+	    List<Medias> medias = new ArrayList<>();
+	    repository.listcoach().forEach(medias::add);
+	 
+	    return medias;
+	  }
+	
+	@GetMapping("/mediasctp")
+	  public List<Medias> getMediasCtp() {
+	     System.out.println("Get  Medias ctp...");
+	 
+	    List<Medias> medias = new ArrayList<>();
+	    repository.listctp().forEach(medias::add);
+	 
+	    return medias;
+	  }
+	
+	@GetMapping("/mediasevenement")
+	  public List<Medias> getMediasEvenement() {
+	     System.out.println("Get  Medias evenement...");
+	 
+	    List<Medias> medias = new ArrayList<>();
+	    repository.listevenement().forEach(medias::add);
+	 
+	    return medias;
+	  }
+	
+	@GetMapping("/mediasatelier")
+	  public List<Medias> getMediasAtelier() {
+	     System.out.println("Get  Medias atelier...");
+	 
+	    List<Medias> medias = new ArrayList<>();
+	    repository.listatelier().forEach(medias::add);
+	 
+	    return medias;
+	  }
+	
+	@GetMapping("/mediaspress")
+	  public List<Medias> getMediasPress() {
+	     System.out.println("Get  Medias press...");
+	 
+	    List<Medias> medias = new ArrayList<>();
+	    repository.listpress().forEach(medias::add);
+	 
+	    return medias;
+	  }
+	
 	
 	 
-	 @GetMapping ("/getAll")
+	 @GetMapping ("/getMedias")
 	 public ResponseEntity<List<String>> getAll()
 	 {
 		 List<String> listMed = new ArrayList<String>();
@@ -108,7 +158,7 @@ public class MediasController {
 			 @RequestParam("medias") String medias) throws JsonParseException , JsonMappingException , Exception
 	 {
 		 System.out.println("Ok .............");
-        Medias arti = new ObjectMapper().readValue(medias, Medias.class);
+        Medias med = new ObjectMapper().readValue(medias, Medias.class);
         boolean isExit = new File(context.getRealPath("/Images/")).exists();
         if (!isExit)
         {
@@ -128,9 +178,9 @@ public class MediasController {
         }
 
        
-        arti.setImage(newFileName);
-        Medias art = repository.save(arti);
-        if (art != null)
+        med.setImage(newFileName);
+        Medias meds = repository.save(med);
+        if (meds!= null)
         {
         	return new ResponseEntity<Response>(new Response (""),HttpStatus.OK);
         }
@@ -163,6 +213,7 @@ public class MediasController {
 		    Optional<Medias> mediasInfo = repository.findById(id);
 		    if (mediasInfo.isPresent()) {
 		    	Medias medias = mediasInfo.get();
+		    	medias.setType(Medias.getType());
 		           medias.setImage(Medias.getImage());
 		          
 		      return new ResponseEntity<>(repository.save(medias), HttpStatus.OK);
